@@ -40,17 +40,16 @@ class UserController extends Controller
         return $user;
     }
 
-    private function UpdateUser($request){
-        $user = User::findOrFail($request);
+    public function UpdateUser(Request $request, $idUser){
+        $user = User::findOrFail($idUser);
 
-        $user = new User();
-        $user -> name = $request -> post("name");
-        $user -> email = $request -> post("email");
-        $user -> edad = $request -> post("edad");
-        $user -> password = Hash::make($request -> post("password"));
+        $user -> name = $request -> name;
+        $user -> email = $request -> email;
+        $user -> edad = $request -> edad;
+        $user -> password = Hash::make($request -> password);
 
         $user -> save();
-
+        
         return $user;
     }
 
@@ -60,11 +59,6 @@ class UserController extends Controller
 
     public function Logout(Request $request){
         $request->user()->token()->revoke();
-        return ['message' => 'Token Revoked'];
-        
-        // Client ID: 1
-        // Client secret: i66A8ocBX9boDbCjIHuPmtc9vAKlAvlvjmx1nUqx
+        return ['message' => 'Token Revoked'];        
     }
-
-    
 }
